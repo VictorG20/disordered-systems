@@ -1,6 +1,6 @@
-using DisorderedSystems
 using DisorderedSystems.BeliefPropagation
 using DisorderedSystems.ProjectPlots
+
 
 function main()
     plot_cavity = true  # Cavity parameters vs cavity position.
