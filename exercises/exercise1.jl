@@ -4,10 +4,10 @@ using DisorderedSystems.ProjectPlots
 
 function main()
     plot_cavity = true  # Cavity parameters vs cavity position.
-    save_cavity = true  # Save the cavity parameters' plot.
+    save_cavity = false  # Save the cavity parameters' plot.
 
     plot_magnet = true  # Mean magnetization for different β's.
-    save_magnet = true  # Save mean magnetization plot.
+    save_magnet = false  # Save mean magnetization plot.
 
     figs_dir = "$(splitdir(@__DIR__)[1])" * "/figures/"  # Directory to save the plots.
     
