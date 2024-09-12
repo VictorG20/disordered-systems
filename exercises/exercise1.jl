@@ -1,12 +1,13 @@
+using DisorderedSystems
 using DisorderedSystems.BeliefPropagation
 using DisorderedSystems.ProjectPlots
 
 function main()
     plot_cavity = true  # Cavity parameters vs cavity position.
-    save_cavity = false  # Save the cavity parameters' plot.
+    save_cavity = true  # Save the cavity parameters' plot.
 
     plot_magnet = true  # Mean magnetization for different β's.
-    save_magnet = false  # Save mean magnetization plot.
+    save_magnet = true  # Save mean magnetization plot.
 
     figs_dir = "$(splitdir(@__DIR__)[1])" * "/figures/"  # Directory to save the plots.
     
@@ -20,7 +21,7 @@ function main()
     """
 
     if plot_cavity
-        println("Plotting cavity parameters vs cavity positions...")
+        println("+ Plotting cavity parameters vs cavity positions...")
         N = 50 
         β = 1//2 
         h = 1//3
@@ -39,7 +40,7 @@ function main()
     end
     
     if plot_magnet
-        println("Plotting mean magnetization at different temperatures...")
+        println("+ Plotting mean magnetization at different temperatures...")
         N = 50  
         h = 1
         init_prob = 0.5  # Probability for the starting node.
@@ -58,7 +59,11 @@ function main()
     end
 
     for (plot, filename, save_opt) in plots
-        save_opt && savefig(plot, figs_dir * filename)
+        if save_opt
+            figure_path = figs_dir * filename
+            println("+ Saving figure to $(figure_path)")
+            savefig(plot, figure_path)
+        end
         display(plot)
     end
 

@@ -10,7 +10,7 @@ export display, savefig
 include("cavity_parameters.jl")
 export plotCavityParameters
 
-using DisorderedSystems.BeliefPropagation
+import DisorderedSystems.BeliefPropagation.getMeanMagnetization
 include("magnetization.jl")
 export plotMeanMagnetization
 
