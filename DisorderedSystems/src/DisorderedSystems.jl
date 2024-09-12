@@ -6,6 +6,9 @@ module DisorderedSystems
 include("BeliefPropagation/BeliefPropagation.jl")
 export BeliefPropagation
 
+include("RandomMatrixTheory/RandomMatrixTheory.jl")
+export RandomMatrixTheory
+
 include("ProjectPlots/ProjectPlots.jl")
 export ProjectPlots
 
