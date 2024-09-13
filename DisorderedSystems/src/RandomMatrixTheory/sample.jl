@@ -28,3 +28,31 @@ function sampleGaussianWignerMatrix(linear_size::Int, mean_connectivity::Int;
 
     return M
 end
+
+
+"""
+    sampleEigenvalues(linear_size::Int, mean_connectivity::Int, num_samples::Int; 
+    mean::Real = 0, std::Real = 1/sqrt(mean_connectivity))
+
+Sample eigenvalues of real Gaussian Wigner matrices.
+
+`num_samples` real Gaussian Wigner matrices of `linear_size` and `mean_connectivity`
+are generated and their eigenvalues computed via direct diagonalization. The output 
+is a matrix of eigenvalues where each column corresponds to a single sample.
+
+# Keyword Arguments
+- `mean::Real=0`: Mean of the Gaussian distribution.
+- `std::Real=1/\\sqrt{mean_connectivity}`: Standard deviation of the Gaussian distribution.
+"""
+function sampleEigenvalues(linear_size::Int, mean_connectivity::Int, num_samples::Int; 
+    mean::Real = 0, std::Real = 1/sqrt(mean_connectivity))
+
+    λ_series = zeros(Float64, linear_size, num_samples)
+
+    for sample in 1:num_samples
+        M = sampleGaussianWignerMatrix(linear_size, mean_connectivity; mean=mean, std=std)
+        λ_series[:, sample] = getEigenvalues(M)
+    end
+
+    return λ_series
+end
