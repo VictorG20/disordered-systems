@@ -47,12 +47,12 @@ is a matrix of eigenvalues where each column corresponds to a single sample.
 function sampleEigenvalues(linear_size::Int, mean_connectivity::Int, num_samples::Int; 
     mean::Real = 0, std::Real = 1/sqrt(mean_connectivity))
 
-    λ_series = zeros(Float64, linear_size, num_samples)
+    λ_samples = zeros(Float64, linear_size, num_samples)
 
     for sample in 1:num_samples
         M = sampleGaussianWignerMatrix(linear_size, mean_connectivity; mean=mean, std=std)
-        λ_series[:, sample] = getEigenvalues(M)
+        λ_samples[:, sample] = getEigenvalues(M)
     end
 
-    return λ_series
+    return λ_samples
 end
