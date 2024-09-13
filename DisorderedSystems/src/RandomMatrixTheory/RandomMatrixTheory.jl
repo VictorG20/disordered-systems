@@ -8,8 +8,10 @@ using Distributions
 using LightGraphs
 using LinearAlgebra
 using Random
+using SparseArrays
 
+include("eigenvalues.jl")
 include("sample.jl")
-export sampleGaussianWignerMatrix
+export sampleEigenvalues
 
 end
