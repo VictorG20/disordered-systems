@@ -4,12 +4,14 @@ Package containing the relevant functionality for the project Statistical Physic
 module DisorderedSystems
 
 include("BeliefPropagation/BeliefPropagation.jl")
-export BeliefPropagation
-
 include("RandomMatrixTheory/RandomMatrixTheory.jl")
-export RandomMatrixTheory
-
 include("ProjectPlots/ProjectPlots.jl")
-export ProjectPlots
+
+using HDF5
+include("DataHandling/save.jl")
+export saveData2h5
+
+include("DataHandling/load.jl")
+export loadDataFromH5
 
 end # module DisorderedSystems
