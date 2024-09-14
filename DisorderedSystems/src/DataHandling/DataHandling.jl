@@ -1,3 +1,6 @@
+"""
+Convenience functions for saving, loading and viewing .h5 data.
+"""
 module DataHandling
     using HDF5
 
@@ -9,5 +12,5 @@ module DataHandling
 
     include("view.jl")
     export viewH5FileContents
-    
+
 end

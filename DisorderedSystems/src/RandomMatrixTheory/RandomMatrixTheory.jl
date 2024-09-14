@@ -12,6 +12,9 @@ using SparseArrays
 
 include("eigenvalues.jl")
 include("sample.jl")
-export sampleEigenvalues
+
+using DisorderedSystems.DataHandling: loadDataFromH5, saveData2h5
+include("direct_diagonalization.jl")
+export direct_diagonalization
 
 end

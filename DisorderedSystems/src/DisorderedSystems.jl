@@ -1,5 +1,6 @@
 """
-Package containing the relevant functionality for the project Statistical Physics of Disordered Systems.
+Package containing the modules, functions and methods for 
+the project 'Statistical Physics of Disordered Systems'.
 """
 module DisorderedSystems
 
