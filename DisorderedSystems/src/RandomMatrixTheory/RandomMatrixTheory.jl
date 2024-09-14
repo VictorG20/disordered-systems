@@ -10,7 +10,6 @@ using LinearAlgebra
 using Random
 using SparseArrays
 
-include("eigenvalues.jl")
 include("sample.jl")
 
 using DisorderedSystems.DataHandling: loadDataFromH5, saveData2h5
