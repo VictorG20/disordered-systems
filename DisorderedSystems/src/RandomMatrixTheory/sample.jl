@@ -51,7 +51,7 @@ function sampleEigenvalues(linear_size::Int, mean_connectivity::Int, num_samples
 
     for sample in 1:num_samples
         M = sampleGaussianWignerMatrix(linear_size, mean_connectivity; mean=mean, std=std)
-        λ_samples[:, sample] = getEigenvalues(M)
+        λ_samples[:, sample] = eigvals(M)
     end
 
     return λ_samples
