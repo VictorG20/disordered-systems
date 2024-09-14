@@ -14,4 +14,7 @@ export saveData2h5
 include("DataHandling/load.jl")
 export loadDataFromH5
 
+include("DataHandling/view.jl")
+export viewH5FileContents
+
 end # module DisorderedSystems
