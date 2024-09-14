@@ -29,7 +29,7 @@ function saveData2h5(filepath::String, data_name::String, data;
     if data_name in keys(data_group)
         if ! overwrite
             error("A dataset with the name '$(data_name)' already exists. " * 
-            "Try a different name or set `rewrite=true`.")
+            "Try a different name or set `overwrite=true`.")
         end
 
         println("    Overwritting data...")
