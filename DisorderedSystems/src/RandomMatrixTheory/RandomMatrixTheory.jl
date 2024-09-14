@@ -8,7 +8,6 @@ using Distributions
 using LightGraphs
 using LinearAlgebra
 using Random
-using SparseArrays
 
 include("sample.jl")
 
