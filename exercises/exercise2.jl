@@ -1,6 +1,6 @@
 using Random
 
-using DisorderedSystems: saveData2h5, loadDataFromH5
+using DisorderedSystems: saveData2h5, loadDataFromH5, viewH5FileContents
 using DisorderedSystems.RandomMatrixTheory: sampleEigenvalues
 using DisorderedSystems.ProjectPlots: plotSpectralDensity
 
@@ -133,5 +133,6 @@ function main()
     return nothing
 end
 
+# main()
 
-main()
+direct_diagonalization()
