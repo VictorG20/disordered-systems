@@ -39,6 +39,11 @@ function _formatTicks(histo_plot)
 end
 
 
+"""
+    plotSpectralDensity(histos; kwargs...)
+
+Plot histogram(s) representing the spectral density of real Gaussian Wigner Matrices.
+"""
 function plotSpectralDensity(histos; kwargs...)
     
     if :shared_bins in keys(kwargs) && kwargs[:shared_bins]

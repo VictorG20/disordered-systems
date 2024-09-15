@@ -1,8 +1,13 @@
 using DisorderedSystems.DataHandling: viewH5FileContents
 using DisorderedSystems.RandomMatrixTheory: direct_diagonalization
-using DisorderedSystems.ProjectPlots: plotSpectralDensity
+using DisorderedSystems.ProjectPlots: plotSpectralDensity, savefig
 
 
+"""
+    setPlotsKwargs()
+
+Wrapper to set plot kwargs. These are passed as plot!(; kw...)
+"""
 function setPlotsKwargs()
     plots_kw = (;
         xlabel="\$ \\lambda \$",
@@ -28,33 +33,74 @@ function setPlotsKwargs()
 end
 
 
+"""
+    getOption(plot_num::Int)
+
+Get an array of cases based on a plot number.
+
+A case is built as a NamedTuple with values (N, c, # of samples).
+Negative values of c represent a mean connectivity of (N + c) so,
+for example, c = -1 corresponds to a fully connected network.
+"""
+function getOption(plot_num::Int)
+
+    cases = @NamedTuple{N::Int, c::Int, samples::Int}[]
+
+    if plot_num == 1
+        case1 = (N = 2^10, c = +3, samples = 10)
+        case2 = (N = 2^10, c = -1, samples = 10)
+        append!(cases, [case1, case2])
+    elseif plot_num == 2
+        case1 = (N = 2^12, c = -1,  samples = 1)
+        case2 = (N = 2^12, c = 100, samples = 1)
+        append!(cases, [case1, case2])
+    else
+        error("Plot number not recognized but you can create it.")
+    end
+
+    return cases
+end
+
+
 function main()
-    view_file = false  # Only view datasets. Nothing else is executed if true.
+    # --------------------------------------------------------------------------------------
+    # User options
 
-    # Data loading/saving.
-    data_dir = "$(splitdir(@__DIR__)[1])" * "/data/"  # Path to data/
-    filename = "exercise2.h5"
+    view_file = false  # Only view datasets. If true, nothing else is executed.
+
+    # Option 1 corresponds to c=3 and c=N-1 for N=2^10 with 10 samples each.
+    # Option 2 corresponds to c=N-1 and c=100 for N=2^12 with 1 sample each.
+    # Additional options can be implemented within the function `getOption`.
+    plot_num = 1
+
+    save_figure = false
+    figure_name = "direct_diago_$(plot_num).png"  # By default, saved within figures/
+    plot_wigner = (plot_num == 1) ? false : true
+    legendtitle = (plot_num == 1) ? "\$ N = 2^{10} \$" : "\$ N = 2^{12} \$"
+
+    filename = "exercise2.h5" # File name to load/save data. Assumed to be within data/
+    group_nm = "eigenvalues"  # Data group name within the file, can also be `nothing`.
+
+    # --------------------------------------------------------------------------------------
+    # Paths to load/save data and save figures.
+    repo_dir = "$(splitdir(@__DIR__)[1])"  # Path to disordered-systems/
+    data_dir = repo_dir * "/data/"  # Path to data/
     filepath = data_dir * filename
-    group_nm = "eigenvalues"  # Data group name within the file.
 
+    figs_dir = repo_dir * "/figures/"  # Path to figures/
+    fig_path = figs_dir * figure_name
+
+    # --------------------------------------------------------------------------------------
+    # Check the data available in the given file within the group(s) name(s).
     if view_file
         viewH5FileContents(filepath, group_names=group_nm)
         return
     end
 
-    # A case is built as (N, c, # of samples).
-    # Negative values of c are interpreted as mean connectivity = (N + c),
-    # so, for example, c = -1 corresponds to a fully connected network.
-    
-    # case1 = (N = 2^10, c = +3, samples = 10)
-    # case2 = (N = 2^10, c = -1, samples = 10)
-    
-    case1 = (N = 2^12, c = -1,  samples = 1)
-    case2 = (N = 2^12, c = 100, samples = 1)
-    cases::Vector{@NamedTuple{N::Int, c::Int, samples::Int}} = [case1, case2]
-
+    # --------------------------------------------------------------------------------------
+    # Load or generate samples of eigenvalues for each case.
     kw = (;
-        load_data = true,
+        load_data = true,  # If true, look for datasets within `group_nm` in `filepath`
         save_data = true,  # If `load_data` is true and all datasets exist, this is ignored.
         get_missing = false,  # When loading data, generate missing datasets.
         filepath = filepath,  # File to either load or save data.
@@ -62,38 +108,45 @@ function main()
         seed = 42  # Random number generator seed.
     )
 
-    # Get λ_series for the given cases.
-    λ_series = direct_diagonalization(cases; kw...)
+    cases = getOption(plot_num)
+    λ_series = direct_diagonalization(cases; kw...)  # Get λ_series for the given cases.
 
+    # --------------------------------------------------------------------------------------
     # Create histogram plot.
-    histo_lw = 1.7
-    histo1 = (
-        data = vec(λ_series[1]), 
-        h_kw = (
-            color=:blue, 
-            label="\$ c = $(case1.c < 0 ? "N - $(abs(case1.c))" : case1.c) \$", 
-            lw=histo_lw, bins=:auto, normalize = :pdf
-            )
-        )
-    histo2 = (
-        data = vec(λ_series[2]), 
-        h_kw = (
-            color=:forestgreen, 
-            label="\$ c = $(case2.c < 0 ? "N - $(abs(case2.c))" : case2.c) \$", 
-            lw=histo_lw, bins=:auto, normalize = :pdf
-            )
-        )
-
     kwargs = (;
-        plots_kwarg = setPlotsKwargs(),
-        plot_wigner = true,
-        shared_bins = true,
-        number_bins = 60,
-        format_tick = true,
-        legendtitle = "\$ N = 2^{10} \$",
+        plots_kwarg = setPlotsKwargs(),  # kwargs to be passed to plot!(;kw...)
+        plot_wigner = plot_wigner,  # Plot Wigner's semicircle law.
+        shared_bins = true,  # If true, fix the amount of bins between min and max values.
+        number_bins = 60,  # If `shared_bins`, this is the total number of bins in the plot.
+        format_tick = true,  # Format axes ticks with LaTeX labels.
+        legendtitle = legendtitle,
     )
 
-    histo_plot = plotSpectralDensity([histo1, histo2]; kwargs...)
+    histos = []
+    colors = [:blue, :forestgreen, :orange, :violet]
+    histo_lw = 1.7
+
+    for (idx, λ_samples, case, color) in zip(1:length(cases), λ_series, cases, colors)
+
+        # A lot of words just to change a color.
+        (length(cases) == 2) && !kwargs[:plot_wigner] && (idx == 2) && (color = :red)
+
+        histo = (
+            data = vec(λ_samples), 
+            h_kw = (
+                label = "\$ c = $(case.c < 0 ? "N - $(abs(case.c))" : case.c) \$", 
+                lw=histo_lw, bins=:auto, normalize = :pdf, color=color,
+                )
+            )
+        push!(histos, histo)
+    end
+
+    histo_plot = plotSpectralDensity(histos; kwargs...)
+
+    if save_figure
+        println("Saving figure to $(fig_path)...")
+        savefig(histo_plot, fig_path)
+    end
     
     display(histo_plot)
 
