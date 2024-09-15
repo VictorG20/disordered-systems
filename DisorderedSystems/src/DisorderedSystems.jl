@@ -7,6 +7,7 @@ module DisorderedSystems
 include("DataHandling/DataHandling.jl")
 include("BeliefPropagation/BeliefPropagation.jl")
 include("RandomMatrixTheory/RandomMatrixTheory.jl")
+include("CavityMethod/CavityMethod.jl")
 include("ProjectPlots/ProjectPlots.jl")
 
 end
