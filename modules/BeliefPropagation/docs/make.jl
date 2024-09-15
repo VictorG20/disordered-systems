@@ -4,7 +4,8 @@ using BeliefPropagation
 makedocs(sitename="BeliefPropagation")
 
 deploydocs(; repo = "github.com/VictorG20/disordered-systems.git",
-             dirname="modules/BeliefPropagation",
-             tag_prefix="modules/BeliefPropagation-",
+             dirname = "BeliefPropagation",
+             versions = nothing,
+             tag_prefix="BeliefPropagation-",
              # ...any additional kwargs
-             )
+        )
