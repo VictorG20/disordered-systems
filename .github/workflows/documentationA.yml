@@ -2,9 +2,11 @@ name: DocumentationA
 
 on:
   push:
-    branches:
-      - main # update to match your development branch (master, main, dev, trunk, ...)
-    tags: '*'
+    paths:
+      - 'modules/BeliefPropagation/**'
+    # branches:
+    #   - main # update to match your development branch (master, main, dev, trunk, ...)
+    # tags: '*'
   pull_request:
 
 jobs:
