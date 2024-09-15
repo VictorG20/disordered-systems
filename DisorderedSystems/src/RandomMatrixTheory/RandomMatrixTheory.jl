@@ -10,6 +10,7 @@ using LinearAlgebra
 using Random
 
 include("sample.jl")
+export sampleGaussianWignerMatrix
 
 using DisorderedSystems.DataHandling: loadDataFromH5, saveData2h5
 include("direct_diagonalization.jl")

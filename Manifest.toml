@@ -2,7 +2,7 @@
 
 julia_version = "1.10.5"
 manifest_format = "2.0"
-project_hash = "c34af8e8aecab77f106da30948f559aa39f12dcf"
+project_hash = "950535a2eea521cd75b29b299da7747a52ce0d3a"
 
 [[deps.AliasTables]]
 deps = ["PtrArrays", "Random"]
@@ -131,7 +131,7 @@ uuid = "8bb1440f-4735-579b-a4ab-409b98df4dab"
 version = "1.9.1"
 
 [[deps.DisorderedSystems]]
-deps = ["Distributions", "HDF5", "LaTeXStrings", "LightGraphs", "LinearAlgebra", "Plots", "Random"]
+deps = ["Distributions", "HDF5", "LaTeXStrings", "LightGraphs", "LinearAlgebra", "Plots", "Random", "SparseArrays"]
 path = "DisorderedSystems"
 uuid = "2ed5c293-c1bd-4907-8057-d69a734e525d"
 version = "0.1.0"
