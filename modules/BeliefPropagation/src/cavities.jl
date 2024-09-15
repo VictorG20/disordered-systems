@@ -5,11 +5,11 @@ Get recursively the next cavity parameter in the chain.
 
 The recursive relation between the cavity parameters is given by
 ```math
-\omega_{i-1}^{(i)} = h + \frac{1}{2\beta} \log{\left( 
+\omega_{i \pm 1}^{(i)} = h + \frac{1}{2\beta} \log{\left( 
     \frac{
-    \cosh{[\beta(\omega_{i-2}^{(i-1)} + 1)]}
+    \cosh{[\beta(\omega_{i \pm 2}^{(i \pm 1)} + 1)]}
     }{
-    \cosh{[\beta(\omega_{i-2}^{(i-1)} - 1)]}
+    \cosh{[\beta(\omega_{i \pm 2}^{(i \pm 1)} - 1)]}
     }
     \right)}
 ```
