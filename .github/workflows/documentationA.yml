@@ -22,7 +22,7 @@ jobs:
           version: '1'
       - uses: julia-actions/cache@v2
       - name: Install dependencies
-        run: julia --project=modules/BeliefPropagation/docs/ -e 'using Pkg; Pkg.develop(PackageSpec(path=modules/BeliefPropagation)); Pkg.instantiate()'
+        run: julia --project=modules/BeliefPropagation/docs/ -e 'using Pkg; Pkg.develop(PackageSpec(path=pwd() * "modules/BeliefPropagation")); Pkg.instantiate()'
       - name: Build and deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # If authenticating with GitHub Actions token
